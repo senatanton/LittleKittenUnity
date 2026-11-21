@@ -1,0 +1,11 @@
+{
+    "name": "LittleKitten.Editor",
+    "references": ["LittleKitten.Core", "LittleKitten.UI"],
+    "includePlatforms": ["Editor"],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

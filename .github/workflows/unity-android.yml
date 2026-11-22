@@ -28,13 +28,26 @@ jobs:
           restore-keys: |
             Library-${{ runner.os }}-
 
-      - name: Setup Unity
-        uses: unity/setup-unity@v1
-        with:
-          unityVersion: 2022.3.69f1
-          cacheKey: Library-${{ runner.os }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget tar gzip
 
-      - name: Build Android
-        run: /opt/unity/Editor/Unity -batchmode -nographics -quit -projectPath . -executeMethod GameManager.BuildAndroid -logFile -
+      - name: Download Unity
+        run: |
+          UNITY_VERSION="2022.3.69f1"
+          UNITY_URL="https://download.unity3d.com/download_unity/${UNITY_VERSION}/LinuxEditorInstaller/Unity-${UNITY_VERSION}.tar.xz"
+          wget -q "$UNITY_URL" -O unity.tar.xz
+          mkdir -p /opt/unity
+          tar -xf unity.tar.xz -C /opt/unity --strip-components=1
+          echo "/opt/unity/Editor" >> $GITHUB_PATH
+
+      - name: Activate Unity
+        run: |
+          /opt/unity/Editor/Unity -batchmode -nographics -quit -logFile - -username "" -password "" -serial "" -licenseFile <(echo "${{ secrets.UNITY_LICENSE }}")
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+
+      - name: Build Android
+        run: |
+          /opt/unity/Editor/Unity -batchmode -nographics -quit -projectPath . -executeMethod GameManager.BuildAndroid -logFile -

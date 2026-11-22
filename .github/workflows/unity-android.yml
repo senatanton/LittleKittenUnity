@@ -32,12 +32,12 @@ jobs:
       - name: Activate Unity
         env:
           UNITY_USERNAME: ${{ secrets.UNITY_USERNAME }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_TOKEN: ${{ secrets.UNITY_TOKEN }}
         run: |
           /opt/unity/Editor/Unity -batchmode -nographics \
           -logFile - \
-          -username ${{ secrets.UNITY_USERNAME }} \
-          -password ${{ secrets.UNITY_PASSWORD }}
+          -username "${UNITY_USERNAME}" \
+          -password "${UNITY_TOKEN}"
 
       - name: Build Android
         run: |

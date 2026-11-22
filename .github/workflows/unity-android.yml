@@ -13,6 +13,9 @@ jobs:
     name: Build APK
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    container:
+      image: unityci/editor:2022.3.69f1-android-1
+      options: --user root
 
     steps:
       - name: Checkout code
@@ -27,22 +30,6 @@ jobs:
           key: Library-${{ runner.os }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
           restore-keys: |
             Library-${{ runner.os }}-
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget tar gzip
-
-      - name: Download Unity
-        run: |
-          UNITY_VERSION="2022.3.21f1"
-          UNITY_URL="https://download.unity3d.com/download_unity/${UNITY_VERSION}/LinuxEditorInstaller/UnitySetup-${UNITY_VERSION}"
-          echo "Downloading from: $UNITY_URL"
-          wget --tries=3 --timeout=120 -q "$UNITY_URL" -O unity.tar.xz
-          mkdir -p /opt/unity
-          tar -xf unity.tar.xz -C /opt/unity --strip-components=1
-          ls -la /opt/unity/Editor
-          echo "/opt/unity/Editor" >> $GITHUB_PATH
 
       - name: Activate Unity
         run: |

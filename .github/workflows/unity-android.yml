@@ -29,15 +29,21 @@ jobs:
             Library-${{ runner.os }}-
 
       - name: Install Unity
-        uses: game-ci/unity-installer@v2
-        with:
-          unityVersion: 2022.3.69f1
-          cacheKey: Library-${{ runner.os }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+        run: |
+          UNITY_VERSION="2022.3.69f1"
+          UNITY_URL="https://download.unity3d.com/download_unity/${UNITY_VERSION}/LinuxEditorInstaller/UnitySetup-${UNITY_VERSION}"
+          
+          curl -o UnitySetup ${UNITY_URL}
+          chmod +x UnitySetup
+          ./UnitySetup --unattended --install-location=/opt/unity --components=Unity,Android
+          echo "/opt/unity/Editor" >> $GITHUB_PATH
 
       - name: Activate Unity
-        uses: game-ci/unity-activate@v2
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        run: |
+          /opt/unity/Editor/Unity -batchmode -nographics -quit -createManualActivationFile -logFile -
+          # UNITY_LICENSE should be provided as secret
+          echo "${{ secrets.UNITY_LICENSE }}" > /tmp/unity_license.ulf
+          /opt/unity/Editor/Unity -batchmode -nographics -quit -licenseFile /tmp/unity_license.ulf -logFile -
 
       - name: Build Android
         run: |

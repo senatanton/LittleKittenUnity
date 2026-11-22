@@ -29,10 +29,10 @@ jobs:
             Library-${{ runner.os }}-
 
       - name: Install Unity
-        uses: game-ci/unity-installer@v4
+        uses: game-ci/unity-installer@v2
         with:
           unityVersion: 2022.3.69f1
-          customArgs: --components=Unity,Android
+          cacheKey: Library-${{ runner.os }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
 
       - name: Activate Unity
         uses: game-ci/unity-activate@v2
@@ -40,8 +40,7 @@ jobs:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
       - name: Build Android
-        uses: game-ci/unity-builder@v4
+        uses: game-ci/unity-builder@v2
         with:
           targetPlatform: Android
           buildMethod: GameManager.BuildAndroid
-          customParameters: -projectPath /github/workspace

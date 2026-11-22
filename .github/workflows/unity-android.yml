@@ -1,4 +1,4 @@
-name: Build Android APK
+﻿name: Build Android APK
 
 on:
  push:
@@ -15,7 +15,7 @@ jobs:
  timeout-minutes: 60
 
  container:
- image: unityci/editor:2022.1.11f1-android-4
+ image: unityci/editor:ubuntu-2022.1.11f1-android-4.0.0
 
  steps:
  - name: Checkout

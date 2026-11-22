@@ -15,7 +15,7 @@ jobs:
  timeout-minutes: 60
 
  container:
- image: unityci/editor:ubuntu-2022.1.11f1-android-4.0.0
+ image: unityci/editor:ubuntu-2022.1.0f1-android-4.0.0
 
  steps:
  - name: Checkout

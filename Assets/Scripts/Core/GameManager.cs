@@ -132,4 +132,26 @@ public class GameManager : MonoBehaviour
  if (pause && _pet && !_pet.data.isSleeping && !_pet.data.isDead)
  _pet.Sleep();
  }
+
+ public static void BuildAndroid()
+ {
+ var playerSettings = UnityEditor.PlayerSettings.Android;
+ UnityEditor.PlayerSettings.companyName = "LittleKitten";
+ UnityEditor.PlayerSettings.productName = "Little Kitten Virtual Pet";
+ UnityEditor.PlayerSettings.applicationIdentifier = "com.littlekitten.virtualpet";
+ UnityEditor.PlayerSettings.defaultInterfaceOrientation = UnityEngine.UIScreenOrientation.Portrait;
+ UnityEditor.PlayerSettings.Android.minSdkVersion = UnityEditor.AndroidSdkVersions.AndroidApiLevel21;
+ UnityEditor.PlayerSettings.Android.targetSdkVersion = UnityEditor.AndroidSdkVersions.AndroidApiLevel34;
+
+ var buildPlayerOptions = new UnityEditor.BuildPlayerOptions
+ {
+ scenes = new[] { "Assets/Scenes/Main.unity" },
+ locationPathName = "Builds/LittleKitten.apk",
+ target = UnityEditor.BuildTarget.Android,
+ options = UnityEditor.BuildOptions.None
+ };
+
+ UnityEditor.BuildPipeline.BuildPlayer(buildPlayerOptions);
+ UnityEditor.EditorApplication.Exit(0);
+ }
 }

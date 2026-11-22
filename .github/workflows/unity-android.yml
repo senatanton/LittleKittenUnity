@@ -37,9 +37,11 @@ jobs:
         run: |
           UNITY_VERSION="2022.3.69f1"
           UNITY_URL="https://download.unity3d.com/download_unity/${UNITY_VERSION}/LinuxEditorInstaller/Unity-${UNITY_VERSION}.tar.xz"
-          wget -q "$UNITY_URL" -O unity.tar.xz
+          echo "Downloading from: $UNITY_URL"
+          wget --tries=3 --timeout=60 -q "$UNITY_URL" -O unity.tar.xz || (echo "Failed to download, trying alternative..." && wget --tries=3 --timeout=60 -q "https://download.unity3d.com/download_unity/${UNITY_VERSION}/LinuxEditorInstaller/UnitySetup-${UNITY_VERSION}" -O unity.tar.xz)
           mkdir -p /opt/unity
           tar -xf unity.tar.xz -C /opt/unity --strip-components=1
+          ls -la /opt/unity/Editor
           echo "/opt/unity/Editor" >> $GITHUB_PATH
 
       - name: Activate Unity

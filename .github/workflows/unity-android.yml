@@ -29,29 +29,19 @@ jobs:
             Library-${{ runner.os }}-
 
       - name: Install Unity
-        run: |
-          UNITY_VERSION="2022.3.69f1"
-          # Use the hash from Unity download page
-          UNITY_HASH="6b4c29b7e7f3"
-          UNITY_URL="https://download.unity3d.com/download_unity/${UNITY_HASH}/LinuxEditorInstaller/UnitySetup-${UNITY_VERSION}"
-          
-          curl -f -o UnitySetup ${UNITY_URL}
-          chmod +x UnitySetup
-          ./UnitySetup --unattended --install-location=/opt/unity --components=Unity,Android
-          echo "/opt/unity/Editor" >> $GITHUB_PATH
+        uses: game-ci/unity-installer@v4
+        with:
+          unityVersion: 2022.3.69f1
+          customArgs: --components=Unity,Android
 
       - name: Activate Unity
-        run: |
-          /opt/unity/Editor/Unity -batchmode -nographics -quit -createManualActivationFile -logFile -
-          echo "${{ secrets.UNITY_LICENSE }}" > /tmp/unity_license.ulf
-          /opt/unity/Editor/Unity -batchmode -nographics -quit -licenseFile /tmp/unity_license.ulf -logFile -
+        uses: game-ci/unity-activate@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
       - name: Build Android
-        run: |
-          /opt/unity/Editor/Unity \
-            -batchmode \
-            -nographics \
-            -quit \
-            -projectPath /github/workspace \
-            -executeMethod GameManager.BuildAndroid \
-            -logFile -
+        uses: game-ci/unity-builder@v4
+        with:
+          targetPlatform: Android
+          buildMethod: GameManager.BuildAndroid
+          customParameters: -projectPath /github/workspace

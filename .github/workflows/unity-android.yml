@@ -1,77 +1,77 @@
 name: Build Android APK
 
 on:
-  push:
-    branches: [main]
-  workflow_dispatch:
+ push:
+ branches: [main]
+ workflow_dispatch:
 
 permissions:
-  contents: read
+ contents: read
 
 jobs:
-  build:
-    name: Build APK
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
+ build:
+ name: Build APK
+ runs-on: self-hosted
+ timeout-minutes: 60
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          lfs: true
+ steps:
+ - name: Checkout repository
+ uses: actions/checkout@v4
+ with:
+ lfs: true
 
-      - name: Cache Library
-        uses: actions/cache@v4
-        with:
-          path: Library
-          key: Library-${{ runner.os }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-${{ runner.os }}-
+ - name: Cache Library
+ uses: actions/cache@v4
+ with:
+ path: Library
+ key: Library-${{ runner.os }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+ restore-keys: |
+ Library-${{ runner.os }}-
 
-      - name: Create LFS file list
-        run: git lfs ls-files -l | cut -d' ' -f1 | sort -u > .lfs-assets-id
+ - name: Create LFS file list
+ run: git lfs ls-files -l | cut -d' ' -f1 | sort -u > .lfs-assets-id
 
-      - name: Restore LFS cache
-        uses: actions/cache@v4
-        with:
-          path: .git/lfs
-          key: lfs-${{ runner.os }}-${{ hashFiles('.lfs-assets-id') }}
-          restore-keys: |
-            lfs-${{ runner.os }}-
+ - name: Restore LFS cache
+ uses: actions/cache@v4
+ with:
+ path: .git/lfs
+ key: lfs-${{ runner.os }}-${{ hashFiles('.lfs-assets-id') }}
+ restore-keys: |
+ lfs-${{ runner.os }}-
 
-      - name: Download LFS files
-        run: git lfs pull
+ - name: Download LFS files
+ run: git lfs pull
 
-      - name: Install Unity
-        uses: game-ci/unity-installer@v4
-        with:
-          unityVersion: 2022.3.21f1
-          cacheKey: Library-${{ runner.os }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+ - name: Install Unity
+ uses: game-ci/unity-installer@v4
+ with:
+ unityVersion: 2022.3.21f1
+ cacheKey: Library-${{ runner.os }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
 
-      - name: Activate Unity license
-        uses: game-ci/unity-activate@v3
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+ - name: Activate Unity license
+ uses: game-ci/unity-activate@v2
+ env:
+ UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
-      - name: Build Android APK
-        uses: game-ci/unity-builder@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        with:
-          targetPlatform: Android
-          buildMethod: LittleKitten.Editor.SceneSetup.BuildAndroid
-          customParameters: -projectPath ${{ github.workspace }}
+ - name: Build Android APK
+ uses: game-ci/unity-builder@v4
+ env:
+ UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+ with:
+ targetPlatform: Android
+ buildMethod: LittleKitten.Editor.SceneSetup.BuildAndroid
+ customParameters: -projectPath ${{ github.workspace }}
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: LittleKitten-APK
-          path: build/*.apk
-          retention-days: 30
+ - name: Upload APK
+ uses: actions/upload-artifact@v4
+ with:
+ name: LittleKitten-APK
+ path: build/*.apk
+ retention-days: 30
 
-      - name: Create Release
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v1
-        with:
-          files: build/*.apk
-          generate_release_notes: true
+ - name: Create Release
+ if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+ uses: softprops/action-gh-release@v1
+ with:
+ files: build/*.apk
+ generate_release_notes: true

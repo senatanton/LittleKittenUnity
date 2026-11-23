@@ -1,0 +1,43 @@
+name: Extract iOS Assets
+
+on:
+  workflow_dispatch:
+
+jobs:
+  extract:
+    name: Extract Assets.car on macOS
+    runs-on: macos-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download IPA from release (or upload as artifact)
+        run: |
+          # IPA is not in repo - you need to upload it first
+          echo "Please upload LittleKitten.ipa as workflow artifact or add to repo"
+          exit 1
+
+      - name: Extract .app from IPA
+        run: |
+          unzip -q LittleKitten.ipa -d extracted
+          APP_PATH=$(find extracted -name "*.app" | head -1)
+          echo "APP_PATH=$APP_PATH" >> $GITHUB_ENV
+
+      - name: Find Assets.car
+        run: |
+          ASSETS_CAR=$(find "$APP_PATH" -name "Assets.car" | head -1)
+          echo "ASSETS_CAR=$ASSETS_CAR" >> $GITHUB_ENV
+
+      - name: Extract Assets.car using assetutil
+        run: |
+          mkdir -p extracted_assets
+          assetutil -I "$ASSETS_CAR" -o extracted_assets/
+
+      - name: Upload extracted assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-assets
+          path: extracted_assets/
+          retention-days: 7

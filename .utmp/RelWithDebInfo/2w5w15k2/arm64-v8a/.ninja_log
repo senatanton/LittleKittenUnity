@@ -1,0 +1,23 @@
+# ninja log v5
+1	4628	8171389873459173	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	7b4d8ea15ea8b140
+38	795	8171389835251793	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	250e72239fe2b043
+24	4022	8171389867052742	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	5721c9c329cac8bf
+801	1169	8171389838415778	C:/AI/Little+Kitten+Virtual+Pet+Cat+(v4.8.3)/LittleKittenUnity/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2w5w15k2/obj/arm64-v8a/libswappywrapper.so	caf22e5cf0fa824c
+16	4009	8171389867067963	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	e9d6cdcff6d7ef02
+33	4128	8171389868491141	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	27d6f724496dc18c
+8	4026	8171389867062860	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	85f928aad1c38e4e
+12	4033	8171389867470004	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	71b2b2445c925da2
+29	4029	8171389867277652	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	85043521428788a4
+4628	4945	8171389876627598	C:/AI/Little+Kitten+Virtual+Pet+Cat+(v4.8.3)/LittleKittenUnity/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2w5w15k2/obj/arm64-v8a/libgame.so	7da1a46f16fb6874
+20	4410	8171389871369829	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	968353673bed8db4
+306	1381	8171432942201668	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	250e72239fe2b043
+1382	1851	8171432946605544	C:/AI/Little+Kitten+Virtual+Pet+Cat+(v4.8.3)/LittleKittenUnity/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2w5w15k2/obj/arm64-v8a/libswappywrapper.so	caf22e5cf0fa824c
+278	4239	8171432970963355	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	5721c9c329cac8bf
+271	4292	8171432971512468	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	e9d6cdcff6d7ef02
+92	4314	8171432971772196	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	85f928aad1c38e4e
+282	4324	8171432971868546	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	85043521428788a4
+75	4368	8171432972340122	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	71b2b2445c925da2
+294	4452	8171432973193665	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	27d6f724496dc18c
+289	4606	8171432974731112	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	968353673bed8db4
+88	4717	8171432975801542	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	7b4d8ea15ea8b140
+4717	4819	8171432976865745	C:/AI/Little+Kitten+Virtual+Pet+Cat+(v4.8.3)/LittleKittenUnity/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2w5w15k2/obj/arm64-v8a/libgame.so	7da1a46f16fb6874

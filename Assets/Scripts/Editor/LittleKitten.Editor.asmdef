@@ -1,6 +1,6 @@
 {
     "name": "LittleKitten.Editor",
-    "references": ["LittleKitten.Core", "LittleKitten.UI"],
+    "references": ["Unity.TextMeshPro","LittleKitten.Core", "LittleKitten.UI"],
     "includePlatforms": ["Editor"],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
@@ -9,3 +9,7 @@
     "autoReferenced": true,
     "defineConstraints": []
 }
+
+
+
+

@@ -130,7 +130,7 @@ public class Pet : MonoBehaviour
  OnCleanlinessChanged?.Invoke(GetCleanlinessNormalized());
  }
 
- public void Pet()
+ public void PetAction()
  {
  if (data.isSleeping) return;
  data.happiness = Mathf.Min(data.happiness + stats.petAmount, stats.maxHappiness);

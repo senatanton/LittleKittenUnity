@@ -1,0 +1,17 @@
+using UnityEditor;
+using UnityEditor.PackageManager;
+using UnityEditor.PackageManager.Requests;
+using UnityEngine;
+
+public static class AddPackages
+{
+    public static void AddTextMeshPro()
+    {
+        var request = Client.Add(\"com.unity.textmeshpro@3.0.6\");
+        while (!request.IsCompleted) { }
+        if (request.Status == StatusCode.Success)
+            Debug.Log(\"TextMeshPro installed successfully\");
+        else
+            Debug.LogError(\"Failed to install TextMeshPro: \" + request.Error.message);
+    }
+}

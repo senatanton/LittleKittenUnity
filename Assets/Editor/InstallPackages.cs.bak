@@ -1,0 +1,17 @@
+using UnityEditor;
+using UnityEditor.PackageManager;
+using UnityEngine;
+
+public class InstallPackages
+{
+ [MenuItem("Tools/Install TMP")]
+ public static void InstallTMP()
+ {
+ var req = Client.Add("com.unity.textmeshpro@3.0.6");
+ while (!req.IsCompleted) { }
+ if (req.Status == StatusCode.Success)
+ Debug.Log("TMP installed!");
+ else
+ Debug.LogError("Failed: " + req.Error.message);
+ }
+}

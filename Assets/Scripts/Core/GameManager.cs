@@ -24,6 +24,11 @@ public class GameManager : MonoBehaviour
  public Slider musicVolumeSlider;
  public Slider sfxVolumeSlider;
 
+ [Header("References")]
+ public PetVisual petVisual;
+ public Object[] statBars; // StatBar references
+ public Object actionButtons; // ActionButtons reference
+
  Pet _pet;
 
  void Awake()
@@ -41,7 +46,7 @@ public class GameManager : MonoBehaviour
 
  void InitializeAudioManager()
  {
- if (FindObjectOfType<AudioManager>() == null)
+ if (FindAnyObjectByType<AudioManager>() == null)
  {
  GameObject audioGO = new GameObject("AudioManager", typeof(AudioManager));
  DontDestroyOnLoad(audioGO);
@@ -129,18 +134,18 @@ public class GameManager : MonoBehaviour
 
  void OnApplicationPause(bool pause)
  {
- if (pause && _pet && !_pet.data.isSleeping && !_pet.data.isDead)
+ if (pause && _pet && !_pet.data.isSleeping && (_pet.data.health <= 0 || _pet.data.hunger <= 0 || _pet.data.sleep <= 0))
  _pet.Sleep();
  }
 
+#if UNITY_EDITOR
  public static void BuildAndroid()
  {
- var playerSettings = UnityEditor.PlayerSettings.Android;
  UnityEditor.PlayerSettings.companyName = "LittleKitten";
  UnityEditor.PlayerSettings.productName = "Little Kitten Virtual Pet";
  UnityEditor.PlayerSettings.applicationIdentifier = "com.littlekitten.virtualpet";
- UnityEditor.PlayerSettings.defaultInterfaceOrientation = UnityEngine.UIScreenOrientation.Portrait;
- UnityEditor.PlayerSettings.Android.minSdkVersion = UnityEditor.AndroidSdkVersions.AndroidApiLevel21;
+ UnityEditor.PlayerSettings.defaultInterfaceOrientation = UnityEditor.UIOrientation.Portrait;
+ UnityEditor.PlayerSettings.Android.minSdkVersion = UnityEditor.AndroidSdkVersions.AndroidApiLevel26;
  UnityEditor.PlayerSettings.Android.targetSdkVersion = UnityEditor.AndroidSdkVersions.AndroidApiLevel34;
 
  var buildPlayerOptions = new UnityEditor.BuildPlayerOptions
@@ -154,4 +159,7 @@ public class GameManager : MonoBehaviour
  UnityEditor.BuildPipeline.BuildPlayer(buildPlayerOptions);
  UnityEditor.EditorApplication.Exit(0);
  }
+#endif
 }
+
+

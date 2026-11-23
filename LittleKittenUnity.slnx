@@ -1,0 +1,5 @@
+﻿<Solution>
+  <Project Path="LittleKitten.Editor.csproj" />
+  <Project Path="LittleKitten.UI.csproj" />
+  <Project Path="LittleKitten.Core.csproj" />
+</Solution>

@@ -15,7 +15,6 @@ jobs:
 
       - name: Download IPA from release
         run: |
-          # Download the IPA from the release
           curl -L -o LittleKitten.ipa "https://github.com/senatanton/LittleKittenUnity/releases/download/ios-extract/Little.Kitten.Virtual.Pet.Cat.v4.8.3.v5.34.Univ.FW.LP.64bit.os130.ok18.-user_hidden.bfi2.ipa"
           ls -la LittleKitten.ipa
 
@@ -26,8 +25,8 @@ jobs:
 
       - name: Find Assets.car
         run: |
-          find Payload -name "Assets.car" -type f
           ASSET_CAR=$(find Payload -name "Assets.car" -type f | head -1)
+          echo "Found: $ASSET_CAR"
           echo "ASSET_CAR=$ASSET_CAR" >> $GITHUB_ENV
 
       - name: Extract Assets.car using assetutil

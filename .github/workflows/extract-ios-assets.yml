@@ -1,40 +1,42 @@
 name: Extract iOS Assets
 
 on:
-  workflow_dispatch:
+ workflow_dispatch:
 
 jobs:
-  extract:
-    name: Extract Assets.car on macOS
-    runs-on: macos-latest
-    timeout-minutes: 30
+ extract:
+ name: Extract Assets.car on macOS
+ runs-on: macos-latest
+ timeout-minutes: 30
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+ steps:
+ - name: Checkout repository
+ uses: actions/checkout@v4
 
-      - name: Download IPA from release
-        run: |
-          curl -L -o LittleKitten.ipa "https://github.com/senatanton/LittleKittenUnity/releases/download/ios-extract/Little.Kitten.Virtual.Pet.Cat.v4.8.3.v5.34.Univ.FW.LP.64bit.os130.ok18.-user_hidden.bfi2.ipa"
-          ls -la LittleKitten.ipa
+ - name: Download IPA from release
+ run: |
+ curl -L -o LittleKitten.ipa "https://github.com/senatanton/LittleKittenUnity/releases/download/ios-extract/Little.Kitten.Virtual.Pet.Cat.v4.8.3.v5.34.Univ.FW.LP.64bit.os130.ok18.-user_hidden.bfi2.ipa"
+ ls -la LittleKitten.ipa
 
-      - name: Extract .app from IPA
-        run: |
-          unzip -q LittleKitten.ipa -d Payload
-          find Payload -type f -name "*.car" | head -20
-          ls -la Payload/
+ - name: Extract .app from IPA
+ run: |
+ unzip -q LittleKitten.ipa -d Payload
+ find Payload -type f -name "*.car" | head -20
+ ls -la Payload/
 
-      - name: Find Assets.car and extract
-        run: |
-          ASSET_CAR=$(find Payload -name "Assets.car" -type f | head -1)
-          echo "Found Assets.car at: $ASSET_CAR"
-          mkdir -p ExtractedAssets
-          assetutil -I "$ASSET_CAR" -o ExtractedAssets/
-          ls -la ExtractedAssets/
+ - name: Find Assets.car and extract
+ run: |
+ ASSET_CAR=$(find Payload -name "Assets.car" -type f | head -1)
+ echo "Found Assets.car at: $ASSET_CAR"
+ mkdir -p ExtractedAssets
+ cd ExtractedAssets
+ assetutil -I "../$ASSET_CAR" -o .
+ find . -type f | head -30
+ ls -la
 
-      - name: Upload extracted assets
-        uses: actions/upload-artifact@v4
-        with:
-          name: ios-assets
-          path: ExtractedAssets/**
-          retention-days: 7
+ - name: Upload extracted assets
+ uses: actions/upload-artifact@v4
+ with:
+ name: ios-assets
+ path: ExtractedAssets/**
+ retention-days: 7
